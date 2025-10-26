@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🎂 Happy Birthday Spiral!</title>
 
 <!-- Fonts -->
@@ -14,11 +14,11 @@
     height: 100vh;
     width: 100vw;
     overflow: hidden;
-    background: url('background.png') center/cover fixed;
+    background: url('background1.png') center/cover fixed;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
     text-align: center;
     font-family: 'Poppins', sans-serif;
     color: white;
@@ -33,6 +33,7 @@
     box-shadow: 0 0 20px rgba(255,255,255,0.3);
     object-fit: cover;
     animation: float 3s ease-in-out infinite;
+    margin-bottom: 15px;
   }
 
   @keyframes float {
@@ -43,93 +44,18 @@
   h1 {
     font-family: 'Pacifico', cursive;
     font-size: 2.8rem;
-    margin-top: 15px;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
   }
 
   p {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin: 10px 0 20px;
   }
 
-  /* 🎂 Cake Styles (fixed) */
-.cake {
-  position: relative;
-  width: 130px;
-  margin: 40px auto 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Candle centered on top */
-.candle {
-  position: relative;
-  width: 14px;
-  height: 40px;
-  background: #ff4d8d;
-  border-radius: 4px;
-  border: 2px solid #7a1f76;
-  z-index: 2;
-  margin-bottom: -5px;
-}
-
-.flame {
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 14px;
-  height: 14px;
-  background: radial-gradient(circle, #fff700 40%, #ff9300 90%);
-  border-radius: 50%;
-  animation: flicker 0.25s infinite alternate;
-}
-
-/* Layers */
-.layer {
-  position: relative;
-  width: 130px;
-  border-radius: 10px;
-  border: 3px solid #7a1f76;
-  background: #ffb5d5;
-  box-shadow: inset 0 -5px 0 rgba(255,255,255,0.5);
-}
-
-.layer.top {
-  height: 35px;
-  margin-bottom: 4px;
-  background: #ffb5d5;
-}
-
-.layer.bottom {
-  width: 150px;
-  height: 45px;
-  background: #ff89b6;
-}
-
-/* Simple icing strip */
-.layer::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 6px;
-  background: repeating-linear-gradient(
-    45deg,
-    #fff,
-    #fff 6px,
-    #ffd6e9 6px,
-    #ffd6e9 12px
-  );
-  border-radius: 10px 10px 0 0;
-}
-
-@keyframes flicker {
-  from { transform: translateX(-50%) scale(1); opacity: 1; }
-  to { transform: translateX(-50%) scale(1.2); opacity: 0.7; }
-}
+  .cake-img {
+    width: 200px;
+    margin: 30px auto;
+  }
 
   button {
     background: white;
@@ -171,32 +97,29 @@
 </style>
 </head>
 <body>
-  <canvas id="confetti"></canvas>
+<canvas id="confetti"></canvas>
 
-  <div class="content">
-    <img id="avatar" class="avatar" src="Spiral_Birthday.png" alt="Spiral Avatar">
-    <h1>🎉 Happy Birthday, Spiral! 🎂</h1>
+<div class="content">
+  <img id="avatar" class="avatar" src="Spiral_Birthday.png" alt="Spiral Avatar">
+  <h1>🎉 Happy Birthday, Spiral! 🎂</h1>
 
-    <div class="cake">
-      <div class="candle"><div class="flame"></div></div>
-      <div class="layer"></div>
-      <div class="layer"></div>
-    </div>
+  <img src="cake1.png" alt="Cake" class="cake-img">
 
-    <p>Wishing you laughter, joy, and an amazing year ahead, Spiral! 💜</p>
-    <button id="surpriseBtn">🎁 Tap for a surprise</button>
-    <div id="surprise">🎊 You’re the best, Spiral! Have an unforgettable day! 🎊</div>
-  </div>
+  <p>Wishing you laughter, joy, and an amazing year ahead, Spiral! 💜</p>
+  <button id="surpriseBtn">🎁 Tap for a surprise</button>
+  <div id="surprise">🎊 You’re the best, Spiral! Have an unforgettable day! 🎊
+  From: Stormy,Quote and Adam</div>
+</div>
 
 <script>
-  // 🎁 Surprise message
+  // 🎁 Surprise message toggle
   document.getElementById("surpriseBtn").addEventListener("click", () => {
     const s = document.getElementById("surprise");
     s.style.display = s.style.display === "block" ? "none" : "block";
   });
 
   // 🖼 Avatar Slideshow
-  const avatars = ["avatar.png", "avatar1.png", "avatar2.png"];
+  const avatars = ["Spiral_Birthday.png", "avatar.png", "avatar1.png", "avatar2.png"];
   let index = 0;
   const avatarImg = document.getElementById("avatar");
   setInterval(() => {
@@ -204,7 +127,7 @@
     avatarImg.src = avatars[index];
   }, 2500); // change every 2.5 sec
 
-  // 🎊 Confetti setup
+  // 🎊 Confetti
   const canvas = document.getElementById("confetti");
   const ctx = canvas.getContext("2d");
   let confettiPieces = [];
@@ -230,7 +153,7 @@
     }
   }
 
-  // Less background confetti by default
+  // Reduced default confetti
   for (let i = 0; i < 30; i++) {
     makeConfetti(Math.random() * canvas.width, Math.random() * canvas.height, 1);
   }
@@ -240,7 +163,7 @@
     confettiPieces.forEach((c, i) => {
       c.x += c.speedX;
       c.y -= c.speedY;
-      c.speedY -= 0.15; // gravity-like effect
+      c.speedY -= 0.15;
       c.life--;
       if (c.life <= 0) confettiPieces.splice(i, 1);
       ctx.fillStyle = c.color;
@@ -250,7 +173,7 @@
   }
   animateConfetti();
 
-  // Click-based confetti bursts 🎇
+  // Click-based confetti bursts
   document.addEventListener("click", e => {
     makeConfetti(e.clientX, e.clientY, 80);
   });
