@@ -52,60 +52,84 @@
     margin: 10px 0 20px;
   }
 
-  /* Cake */
-  .cake {
-    position: relative;
-    width: 110px;
-    margin: 30px auto;
-  }
+  /* 🎂 Cake Styles (fixed) */
+.cake {
+  position: relative;
+  width: 130px;
+  margin: 40px auto 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .layer {
-    width: 100%;
-    height: 25px;
-    background: #ffadc2;
-    border-radius: 8px;
-    margin-top: 5px;
-    position: relative;
-    border: 3px solid #7a1f76; /* dark purple outline */
-  }
+/* Candle centered on top */
+.candle {
+  position: relative;
+  width: 14px;
+  height: 40px;
+  background: #ff4d8d;
+  border-radius: 4px;
+  border: 2px solid #7a1f76;
+  z-index: 2;
+  margin-bottom: -5px;
+}
 
-  .layer::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 6px;
-    background: repeating-linear-gradient(45deg, #fff, #fff 4px, #ffadc2 4px, #ffadc2 8px);
-    border-radius: 8px 8px 0 0;
-  }
+.flame {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle, #fff700 40%, #ff9300 90%);
+  border-radius: 50%;
+  animation: flicker 0.25s infinite alternate;
+}
 
-  .candle {
-    position: absolute;
-    top: -35px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 12px;
-    height: 30px;
-    background: #ff4081;
-    border-radius: 3px;
-    border: 2px solid #7a1f76;
-  }
+/* Layers */
+.layer {
+  position: relative;
+  width: 130px;
+  border-radius: 10px;
+  border: 3px solid #7a1f76;
+  background: #ffb5d5;
+  box-shadow: inset 0 -5px 0 rgba(255,255,255,0.5);
+}
 
-  .flame {
-    position: absolute;
-    top: -12px;
-    left: 0;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #fff700 40%, #ff9300 90%);
-    animation: flicker 0.25s infinite alternate;
-  }
+.layer.top {
+  height: 35px;
+  margin-bottom: 4px;
+  background: #ffb5d5;
+}
 
-  @keyframes flicker {
-    from { transform: scale(1); opacity: 1; }
-    to { transform: scale(1.2); opacity: 0.7; }
-  }
+.layer.bottom {
+  width: 150px;
+  height: 45px;
+  background: #ff89b6;
+}
+
+/* Simple icing strip */
+.layer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: repeating-linear-gradient(
+    45deg,
+    #fff,
+    #fff 6px,
+    #ffd6e9 6px,
+    #ffd6e9 12px
+  );
+  border-radius: 10px 10px 0 0;
+}
+
+@keyframes flicker {
+  from { transform: translateX(-50%) scale(1); opacity: 1; }
+  to { transform: translateX(-50%) scale(1.2); opacity: 0.7; }
+}
 
   button {
     background: white;
