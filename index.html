@@ -104,6 +104,221 @@
   /* Cake */
   .cake {
     width: 120px;
+    margin: 20px auto;
+    position: relative;
+  }
+  .cake .layer {
+    width: 100%;
+    height: 25px;
+    background: #ffb6c1;
+    border-radius: 8px;
+    position: relative;
+  }
+  .cake .layer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: repeating-linear-gradient(45deg, #fff, #fff 4px, #ffb6c1 4px, #ffb6c1 8px);
+    border-radius: 8px 8px 0 0;
+  }
+  .candle {
+    width: 10px;
+    height: 25px;
+    background: #ff4081;
+    margin: 0 auto;
+    border-radius: 3px;
+    position: relative;
+    top: -15px;
+  }
+  .flame {
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, #fff700 40%, #ff9300 90%);
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    left: 0;
+    animation: flicker 0.3s infinite alternate;
+  }
+  @keyframes flicker {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(1.2); opacity: 0.7; }
+  }
+
+  /* Balloons */
+  .balloon {
+    position: absolute;
+    bottom: -150px;
+    width: 60px;
+    height: 80px;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: floatUp 10s linear infinite;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-110vh); opacity: 0; }
+  }
+
+  #confetti-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+</style>
+</head>
+<body>
+  <canvas id="confetti-canvas"></canvas>
+  <div id="balloon-container"></div>
+
+  <div class="content">
+    <!-- 👇 Replace with Spiral’s Discord avatar image -->
+    <img class="avatar" src="avatar.png" alt="Spiral Avatar">
+    <h1>🎂 Happy Birthday, Spiral! 🎉</h1>
+
+    <div class="cake">
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="candle"><div class="flame"></div></div>
+    </div>
+
+    <p>Wishing you a day full of laughter, joy, and endless smiles, Spiral! 💫</p>
+    <button id="surpriseBtn">🎁 Click for a surprise!</button>
+    <div id="surprise">🎊 You’re awesome, Spiral — enjoy your special day! 🎊</div>
+  </div>
+
+  <script>
+    // Surprise toggle
+    document.getElementById("surpriseBtn").addEventListener("click", () => {
+      const s = document.getElementById("surprise");
+      s.style.display = s.style.display === "block" ? "none" : "block";
+    });
+
+    // Confetti
+    const canvas = document.getElementById("confetti-canvas");
+    const ctx = canvas.getContext("2d");
+    let confettis = [];
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    function Confetti() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height - canvas.height;
+      this.size = Math.random() * 6 + 4;
+      this.speed = Math.random() * 3 + 2;
+      this.color = `hsl(${Math.random() * 360}, 100%, 70%)`;
+    }
+
+    function update() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettis.forEach(c => {
+        c.y += c.speed;
+        if (c.y > canvas.height) c.y = -10;
+        ctx.fillStyle = c.color;
+        ctx.fillRect(c.x, c.y, c.size, c.size);
+      });
+      requestAnimationFrame(update);
+    }
+
+    for (let i = 0; i < 150; i++) confettis.push(new Confetti());
+    update();
+
+    // Balloons
+    const colors = ["#ff4081", "#ffd700", "#40c4ff", "#69f0ae", "#ff80ab"];
+    const container = document.getElementById("balloon-container");
+    function createBalloon() {
+      const b = document.createElement("div");
+      b.classList.add("balloon");
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      b.style.background = color;
+      b.style.left = Math.random() * 100 + "vw";
+      b.style.animationDuration = 8 + Math.random() * 5 + "s";
+      container.appendChild(b);
+      setTimeout(() => b.remove(), 12000);
+    }
+    setInterval(createBalloon, 500);
+  </script>
+</body>
+</html>    position: relative;
+    max-width: 500px;
+    padding: 20px;
+  }
+
+  h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 3rem;
+    margin: 10px 0;
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 30px;
+    background-color: #fff;
+    color: #ff3ca6;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+  }
+
+  #surprise {
+    margin-top: 20px;
+    display: none;
+    font-size: 1.3rem;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* Avatar */
+  .avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    box-shadow: 0 0 20px #ff69b4;
+    animation: glow 2s infinite alternate, float 3s ease-in-out infinite;
+    object-fit: cover;
+  }
+
+  @keyframes glow {
+    from { box-shadow: 0 0 15px #ff69b4; }
+    to { box-shadow: 0 0 30px #ff1493; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Cake */
+  .cake {
+    width: 120px;
     margin: 30px auto;
     position: relative;
   }
